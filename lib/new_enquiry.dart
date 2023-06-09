@@ -1,5 +1,9 @@
+import 'package:bloc_project/models/branch_cubit.dart';
+import 'package:bloc_project/models/branch_model.dart';
 import 'package:bloc_project/models/client_info_cubit.dart';
 import 'package:bloc_project/models/client_info_model.dart';
+import 'package:bloc_project/models/region_cubit.dart';
+import 'package:bloc_project/models/region_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -151,15 +155,20 @@ class NewEnquiry extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: BlocBuilder<ClientInfoCubit, ClientInfoModel>(
-                    builder: (context, state) {
-                      return ModalDropDown(
-                        label: 'Region',
-                        items: ['Kerala', 'Tamilnadu'],
-                        value: state.region,
-                        onSelected: (String selectedValue) {
-                          context
-                              .read<ClientInfoCubit>()
-                              .addRegion(selectedValue);
+                    builder: (_, clientState) {
+                      return BlocBuilder<RegionCubit, List<RegionModel>>(
+                        builder: (_, regionState) {
+                          List<String> regions = regionState.map((e) => e.branchName).toList();
+                          return ModalDropDown(
+                            label: 'Region',
+                            items: regions,
+                            value: clientState.region,
+                            onSelected: (String selectedValue) {
+                              context
+                                  .read<ClientInfoCubit>()
+                                  .addRegion(selectedValue);
+                            },
+                          );
                         },
                       );
                     },
@@ -168,15 +177,21 @@ class NewEnquiry extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: BlocBuilder<ClientInfoCubit, ClientInfoModel>(
-                    builder: (context, state) {
-                      return ModalDropDown(
-                        label: 'Branch',
-                        items: ['Branch 1', 'Branch 2'],
-                        value: '${state.branch}',
-                        onSelected: (String selectedValue) {
-                          context
-                              .read<ClientInfoCubit>()
-                              .addBranch(selectedValue);
+                    builder: (context, clientState) {
+                      return BlocBuilder<BranchCubit, List<BranchModel>>(
+                        builder: (_, branchState) {
+                          List<String> branches =
+                              branchState.map((e) => e.branchName).toList();
+                          return ModalDropDown(
+                            label: 'Branch',
+                            items: branches,
+                            value: '${clientState.branch}',
+                            onSelected: (String selectedValue) {
+                              context
+                                  .read<ClientInfoCubit>()
+                                  .addBranch(selectedValue);
+                            },
+                          );
                         },
                       );
                     },
