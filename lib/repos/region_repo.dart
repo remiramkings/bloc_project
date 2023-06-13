@@ -15,7 +15,7 @@ class RegionRepo{
     return (response.statusCode>=200 && response.statusCode<300);
   }
   Future<List<RegionModel>> loadRegions() async {
-    // TODO: Change endpoint to get regions
+   
     Uri url = Uri.http('crm.todomor.com', '/api/getBranchLists/6');
     Response response = await client.get(url);
 

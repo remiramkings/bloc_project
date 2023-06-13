@@ -14,17 +14,7 @@ class NewEnquiry extends StatelessWidget {
   String? selectedUserType;
   String? selectedAssignedUser;
   String? selectedContactType;
-  var items = [
-    'End User',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
-  var names = ['Abhiram', 'name 1', 'name 2', 'name 3'];
-
-  var contactTypes = ['Home', 'Office', 'Personal'];
+ 
 
   @override
   Widget build(BuildContext context) {
